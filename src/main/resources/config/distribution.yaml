@@ -1,0 +1,33 @@
+server:
+  port: 8885
+spring:
+  application:
+    name: distribution
+  rabbitmq:
+    host: ${HOST}
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  instance:
+    hostname: distribution
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+    registry-fetch-interval-seconds: 1
+    serviceUrl:
+      defaultZone: http://${HOST}:8761/eureka/
+
+
+rabbitmq:
+  track-order:
+    exchange: track-order.exchange.direct
+    queue: track-order.distribution
+    rk: track-order
+
+#springdoc:
+#  swagger-ui:
+#    disable-swagger-default-url: true
+#    path: /distribution

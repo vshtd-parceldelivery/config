@@ -1,0 +1,24 @@
+server:
+  port: 8880
+
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config
+  profiles:
+    active: native
+
+eureka:
+  instance:
+    hostname: config
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+    registry-fetch-interval-seconds: 1
+    serviceUrl:
+      defaultZone: http://${HOST}:8761/eureka/

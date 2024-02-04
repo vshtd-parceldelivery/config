@@ -1,0 +1,53 @@
+server:
+  port: 8884
+spring:
+  application:
+    name: logistic
+  rabbitmq:
+    host: ${HOST}
+    port: 5672
+    username: guest
+    password: guest
+  flyway:
+    locations: classpath:db/migration
+  datasource:
+    url: jdbc:postgresql://${HOST}:5432/logistic
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    transaction:
+      default-timeout: 60
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+      open-in-view: false
+      properties:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        hibernate:
+          show_sql: false
+
+eureka:
+  instance:
+    hostname: logistic
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+    registry-fetch-interval-seconds: 1
+    serviceUrl:
+      defaultZone: http://${HOST}:8761/eureka/
+
+jwt:
+  signing:
+    key: iuLTU8rq83ssfe4gfege5ge5hryjtyumjt7mt7mh6iu
+
+rabbitmq:
+  track-order:
+    exchange: track-order.exchange.direct
+    rk: track-order
+
+#springdoc:
+#  swagger-ui:
+#    disable-swagger-default-url: true
+#    path: /logistic

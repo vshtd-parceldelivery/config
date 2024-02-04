@@ -1,0 +1,39 @@
+server:
+  port: 8881
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      enabled: true
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 30s
+      routes:
+        - id: auth
+          uri: http://${HOST}:8882
+          predicates:
+            - Path=/auth/**
+        - id: profile
+          uri: http://${HOST}:8883
+          predicates:
+            - Path=/profile/**
+        - id: logistic
+          uri: http://${HOST}:8884
+          predicates:
+            - Path=/logistic/**
+        - id: distribution
+          uri: http://${HOST}:8885
+          predicates:
+            - Path=/distribution/**
+
+eureka:
+  instance:
+    hostname: gateway
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+    registry-fetch-interval-seconds: 1
+    serviceUrl:
+      defaultZone: http://${HOST}:8761/eureka/

@@ -1,0 +1,57 @@
+server:
+  port: 8882
+spring:
+  application:
+    name: auth
+  rabbitmq:
+    host: ${HOST}
+    port: 5672
+    username: guest
+    password: guest
+  flyway:
+    locations: classpath:db/migration
+  datasource:
+    url: jdbc:postgresql://${HOST}:5432/auth
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    transaction:
+      default-timeout: 60
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+      open-in-view: false
+      properties:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        hibernate:
+          show_sql: false
+
+eureka:
+  instance:
+    hostname: auth
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+    registry-fetch-interval-seconds: 1
+    serviceUrl:
+      defaultZone: http://${HOST}:8761/eureka/
+
+jwt:
+  signing:
+    key: iuLTU8rq83ssfe4gfege5ge5hryjtyumjt7mt7mh6iu
+  key:
+    expiration: 6048000000
+
+
+rabbitmq:
+  create-profile:
+    exchange: create-profile.exchange.direct
+    queue: create-profile.auth
+    rk: create-profile
+
+#springdoc:
+#  swagger-ui:
+#    disable-swagger-default-url: true
+#    path: /auth
